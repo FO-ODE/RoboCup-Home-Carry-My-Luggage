@@ -21,6 +21,10 @@ All required packages for this task have been encapsulated in **two Docker image
 **Note:** Due to **differences in MoveIt versions** and **incompatibility of certain message types**, some features may not function correctly in the **Gazebo simulation environment**.  
 
 You can download them here:  
+```bash
+  docker pull foode258/tiago_yolo:fpmoveit10
+  docker pull foode258/yolo_ros:fptest1
+```
 
 
 ## Features
