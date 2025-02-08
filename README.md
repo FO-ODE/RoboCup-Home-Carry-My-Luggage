@@ -5,7 +5,6 @@ This project is modified from Carry My Luggage, which is a standard RoboCup task
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Docker](#Docker)
-- [Usage](#usage)
 - [Features](#features)
 - [License](#license)
 
