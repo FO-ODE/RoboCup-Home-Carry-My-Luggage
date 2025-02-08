@@ -1,8 +1,7 @@
 # RoboCup@Home
 
 ## Overview
-A ROS-based solution for person detection and following using the TIAGo robot platform, developed for the roboCup@Home competition. The system enables TIAGo to detect, track, and safely follow people in dynamic environments.
-
+This project is modified from \textbf{Carry My Luggage}, which is a standard RoboCup task. The goal of the task is for the robot to carry an item specified by the operator, follow the operator around, and return the item to the operator in the end. 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
