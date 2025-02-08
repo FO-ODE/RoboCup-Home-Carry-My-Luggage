@@ -1,4 +1,4 @@
-# TIAGo Person Following
+# RoboCup@Home
 
 ## Overview
 A ROS-based solution for person detection and following using the TIAGo robot platform, developed for the roboCup@Home competition. The system enables TIAGo to detect, track, and safely follow people in dynamic environments.
