@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>carry_task_manager</name>
+  <version>0.1.0</version>
+  <description>State machine</description>
+
+  <maintainer email="todo@todo.com">Boyu Zhang</maintainer>
+
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>move_base_msgs</build_depend>
+  <build_depend>smach</build_depend>
+  <build_depend>smach_ros</build_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>move_base_msgs</exec_depend>
+  <exec_depend>smach</exec_depend>
+  <exec_depend>smach_ros</exec_depend>
+
+  <export>
+    <build_type>catkin</build_type>
+  </export>
+</package>

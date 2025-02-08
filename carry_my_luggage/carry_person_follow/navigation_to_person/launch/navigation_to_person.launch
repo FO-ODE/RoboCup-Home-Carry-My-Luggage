@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+  <node name="navigation_to_person_node" type="navigation_to_person.py" pkg="navigation_to_person" output="screen" />
+  <!-- The rest of the params are specific to this plugin -->
+  <rosparam file="$(find navigation_to_person)/config/param.yaml"/>
+
+</launch>

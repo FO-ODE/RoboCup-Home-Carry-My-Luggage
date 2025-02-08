@@ -1,0 +1,7 @@
+max_velocity_scaling_factor_arm_prepare: 0.3
+
+max_velocity_scaling_factor_grasp: 0.3
+
+max_velocity_scaling_factor_drop: 0.5
+
+max_velocity_scaling_factor_arm: 0.3

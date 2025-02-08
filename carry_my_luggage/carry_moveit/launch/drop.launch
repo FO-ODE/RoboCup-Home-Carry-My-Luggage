@@ -1,0 +1,9 @@
+<launch>
+
+    <rosparam command="load" file="$(find carry_moveit)/launch/config/drop_config.yaml" />
+    
+    <rosparam command="load" file="$(find carry_moveit)/launch/config/arm_velocity_config.yaml" />
+
+    <node name="drop" pkg="carry_moveit" type="drop" output="screen" />
+
+</launch>

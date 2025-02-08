@@ -1,0 +1,10 @@
+goal_pose:
+  position:
+    x: 0.2
+    y: -0.5
+    z: 1.4
+
+  orientation:
+    roll: 0.0
+    pitch: -1.57
+    yaw: 0.0

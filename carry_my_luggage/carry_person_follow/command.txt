@@ -1,0 +1,8 @@
+roslaunch tiago_2dnav_gazebo tiago_nav_wrs.launch public_sim:=true lost:=true world:=person_following map:=$HOME/.pal/tiago_maps/configurations/wrs2020 
+roslaunch tiago_localization tiago_localization.launch
+roslaunch object_detection_world find_person.launch
+roslaunch navigation_to_person navigation_to_person.launch
+
+
+roslaunch tiago_2dnav_gazebo tiago_nav_wrs.launch public_sim:=true lost:=true world:=move_to_bottle map:=$HOME/.pal/tiago_maps/configurations/wrs2020 
+roslaunch move_to_object move_to_object.launch 

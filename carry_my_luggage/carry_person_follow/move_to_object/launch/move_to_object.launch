@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+  <node name="move_to_object_node" type="move_to_object.py" pkg="move_to_object" output="screen" />
+  <!-- The rest of the params are specific to this plugin -->
+  <rosparam file="$(find move_to_object)/config/param.yaml"/>
+
+</launch>

@@ -1,0 +1,42 @@
+<launch>
+  <arg name="world" default="wrs2020_cola3"/>
+  <arg name="map"            default="$(env HOME)/.pal/tiago_maps/configurations/$(arg world)"/>
+
+  <arg name="public_sim"   default="true"/>
+
+  <arg name="lost" default="false"/>
+  <arg name="gzpose" default="-x 1.5 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 0.0" unless="$(arg lost)"/>
+  <arg name="gzpose" default="-x 0.78 -y -11.1 -z -0.003 -R 0.0 -P 0.0 -Y 70.0" if="$(arg lost)"/>  
+  
+  <arg name="end_effector"  default="pal-gripper"/>
+
+  
+      <!-- Launch tiago_2dnav -->
+      <include file="$(find tiago_2dnav_gazebo)/launch/tiago_navigation.launch">
+        <arg name="map"   value="$(arg map)"/>
+        <arg name="world" value="$(arg world)" />
+        <arg name="public_sim" value="$(arg public_sim)"/>
+        <arg name="gzpose" value="$(arg gzpose)"/>
+        <arg name="end_effector"  default="$(arg end_effector)"/>
+      </include>
+
+
+
+      <!-- Launch object_detection -->
+      <!-- <include file="$(find object_detection)/launch/object_detection.launch"/> -->
+
+
+      <!-- Launch plane_segmentation -->
+      <include file="$(find carry_perception)/launch/plane_segmentation.launch" />
+
+      
+      <!-- Launch object_labeling -->
+      <include file="$(find carry_perception)/launch/object_labeling.launch" />
+
+  
+
+        <!-- <node name="map_server" pkg="map_server" type="map_server" output="screen">
+        <param name="map" value="$(find t5_navi)/src/t5_navi/maps/wrs2020/map.yaml" />
+        </node> -->
+
+</launch>

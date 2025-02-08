@@ -1,0 +1,25 @@
+<package>
+
+  <name>navigation_to_person</name>
+  <version>0.6.3</version>
+  <description>
+     A package for demostrating task management with state machine
+  </description>
+  <maintainer email="shilin1.zhang@tum.de">Shilin Zhang</maintainer>
+  <license> bsd </license>
+  <run_depend>tiago_description</run_depend>
+  <run_depend>moveit_commander</run_depend>
+  <run_depend>moveit_planners_ompl</run_depend>
+  <run_depend>moveit_ros_move_group</run_depend>
+  <run_depend>moveit_ros_visualization</run_depend>
+  <run_depend>moveit_setup_assistant</run_depend>
+  <run_depend>moveit_simple_controller_manager</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rviz</run_depend>
+  <run_depend>topic_tools</run_depend>
+  <run_depend>xacro</run_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <test_depend>roslaunch</test_depend>
+</package>

@@ -1,0 +1,21 @@
+PLANNER: "RRTstarkConfigDefault" 
+# RRTstarkConfigDefault
+# RRTConnectkConfigDefault
+
+closing_in: 
+  position:
+    x: 0.03 # 0.03 for real robot
+    y: -0.17 # -0.17 for real robot
+    z: 0.0
+  orientation: # Rotation in Euler angles
+    roll: -90 # Rotate around X-axis
+    pitch: 0 # Rotate around the Y-axis
+    yaw: 180 # Rotate around the Z-axis # default: 90
+
+grasp_adjustment:
+  position:
+    z: -0.4
+
+lift_adjustment:
+  position:
+    z: 0.5

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <node name="object_labeling_node" pkg="object_labeling" type="object_labeling_node" output="screen"/>
+  
+</launch>

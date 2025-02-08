@@ -1,0 +1,1 @@
+rosrun yolov8_pose_gazebo yolov8_pose_gazebo.py

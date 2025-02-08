@@ -1,0 +1,1 @@
+<bgr2rgb_node.py> This node subscribes the topic **/xtion/rgb/image_raw** ,publish the topic **/camera/image_bgr** turn the image from bgr to rgb, this fixes the color channel problem. 

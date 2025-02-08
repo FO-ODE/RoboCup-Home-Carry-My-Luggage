@@ -1,0 +1,8 @@
+<launch>
+  
+  <rosparam command="load" file="$(find carry_moveit)/launch/config/arm_prepare_config.yaml" />
+
+  <rosparam command="load" file="$(find carry_moveit)/launch/config/arm_velocity_config.yaml" />
+
+  <node name="arm_prepare" pkg="carry_moveit" type="arm" output="screen" />
+</launch>

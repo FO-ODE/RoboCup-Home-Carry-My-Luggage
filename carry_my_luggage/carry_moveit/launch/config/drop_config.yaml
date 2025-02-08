@@ -1,0 +1,14 @@
+first_detach_position: 
+  position:
+    x: 0.5
+    y: 0.0
+    z: 0.75
+  orientation:
+    w: -0.5
+    x: 0.5
+    y: 0.5
+    z: -0.5
+
+second_leaving_position:
+  position:
+    z: 0.0

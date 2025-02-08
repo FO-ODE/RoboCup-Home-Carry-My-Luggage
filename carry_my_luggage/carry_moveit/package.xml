@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>carry_moveit</name>
+  <version>1.0.0</version>
+  <description>MoveIt! for TIAGo robot</description>
+
+  <maintainer email="boyu.zhang@tum.de">boyu zhang</maintainer>
+  <license>Modified BSD</license>
+
+  <!-- Build and run dependencies -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>moveit_ros_planning_interface</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>move_base_msgs</build_depend>
+  <build_depend>teleop_tools_msgs</build_depend>
+  <exec_depend>teleop_tools_msgs</exec_depend>
+  <exec_depend>moveit_ros_planning_interface</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>move_base_msgs</exec_depend>
+
+  <!-- Export dependencies -->
+  <build_export_depend>actionlib</build_export_depend>
+  <build_export_depend>move_base_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>moveit_ros_planning_interface</build_export_depend>
+
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
+
+
+
+
+
+
+
+

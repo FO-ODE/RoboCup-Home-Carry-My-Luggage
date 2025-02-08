@@ -1,0 +1,8 @@
+<launch>
+
+    <rosparam command="load" file="$(find carry_moveit)/launch/config/grasp_vertical_config.yaml" />
+    
+    <rosparam command="load" file="$(find carry_moveit)/launch/config/arm_velocity_config.yaml" />
+
+    <node name="grasp" pkg="carry_moveit" type="grasp" output="screen" />
+</launch>

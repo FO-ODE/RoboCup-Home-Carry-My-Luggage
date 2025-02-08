@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+  <rosparam file="$(find carry_navi)/launch/config/localization_config.yaml" />
+
+  <node name="carry_localization_node" pkg="carry_navi" type="carry_localization_node" output="screen"/>
+
+</launch>

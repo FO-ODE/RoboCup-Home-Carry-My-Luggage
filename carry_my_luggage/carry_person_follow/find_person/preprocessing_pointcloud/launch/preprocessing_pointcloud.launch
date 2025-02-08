@@ -1,0 +1,5 @@
+<launch>
+
+  <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+  <node name="preprocessing_pointcloud_node" pkg="preprocessing_pointcloud" type="preprocessing_pointcloud_node" output="screen"/>
+</launch>
