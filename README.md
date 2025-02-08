@@ -6,8 +6,7 @@ This project is modified from Carry My Luggage, which is a standard RoboCup task
 - [Prerequisites](#prerequisites)
 - [Docker](#Docker)
 - [Features](#features)
-- [License](#license)
-
+- [Usage](#Usage)
 ## Prerequisites
 - Ubuntu 20.04
 - ROS Noetic
@@ -15,7 +14,7 @@ This project is modified from Carry My Luggage, which is a standard RoboCup task
 - CUDA-compatible GPU (for YOLO)
 
 ## Docker
-All required packages for this task have been encapsulated in **two Docker images**, which include a fully configured runtime environment. Once downloaded, they can be directly used on the **Tiago robot**.  
+All required packages for this task have been encapsulated in **two Docker images**, which include a fully configured runtime environment. Once downloaded, they can be directly used on the **Tiago robot**. And it is recommended to boot the image with **rocker** in order to enable Nvidia CUDA support.
 
 **Note:** Due to **differences in MoveIt versions** and **incompatibility of certain message types**, some features may not function correctly in the **Gazebo simulation environment**.  
 
@@ -26,22 +25,35 @@ You can download them here:
 ```
 
 
+
+
+## Usage
+The navigation points within the program are based on the map in the lab, please adjust accordingly.
+
+Please make sure that dockers can communicate with each other properly.
+
+
+
+
+In the **yolo_ros** image:
+```bash
+roslaunch object_detection object_detection.launch
+```
+In the **tiago_yolo** image：
+```bash
+rosrun carry_task_manager task_manager.py
+```
+
+
+
+
+
 ## Features
 - Person Detection and Tracking
   - Real-time detection of people using YOLO V3
   - Continuous tracking through the /text_markers topic
   - Head movement control to track detected persons
 
-- Safe Navigation
-  - Maintains configurable safe distance from target person (default: 0.5m)
-  - Dynamic navigation goal calculation based on person's position
-  - Automatic orientation adjustment to face the person
-
-- Robust Navigation Strategies
-  - Automatic retry mechanism for person detection
-  - Multiple search rotations when person is not found
-  - Detour planning when direct path is blocked
-  - Fallback mechanisms for navigation failures
 
 - ROS Integration
   - Compatible with ROS Navigation Stack
@@ -49,12 +61,4 @@ You can download them here:
   - TF2 integration for coordinate transformations
   - Real-time visualization of navigation goals and person poses
 
-- Configuration
-  - Adjustable safe distance parameter via launch file
-  - Customizable target object detection
-  - Configurable retry attempts and intervals
 
-
-## License
-
-This project is licensed under the MIT License 
