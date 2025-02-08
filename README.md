@@ -1,7 +1,7 @@
 # RoboCup@Home
 
 ## Overview
-This project is modified from \textbf{Carry My Luggage}, which is a standard RoboCup task. The goal of the task is for the robot to carry an item specified by the operator, follow the operator around, and return the item to the operator in the end. 
+This project is modified from Carry My Luggage, which is a standard RoboCup task. The goal of the task is for the robot to carry an item specified by the operator, follow the operator around, and return the item to the operator in the end. 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
@@ -10,10 +10,9 @@ This project is modified from \textbf{Carry My Luggage}, which is a standard Rob
 - [License](#license)
 
 ## Prerequisites
-- ROS Noetic
 - Ubuntu 20.04
+- ROS Noetic
 - TIAGo Robot / Simulator
-- Python 3.8+
 - CUDA-compatible GPU (for YOLO)
 
 ## Installation
