@@ -5,7 +5,7 @@ This project is modified from Carry My Luggage, which is a standard RoboCup task
 ## Table of Contents
 - [Prerequisites](#prerequisites)
 - [Docker](#Docker)
-- [Features](#features)
+- [Ultralytics](#ultralytics)
 - [Usage](#Usage)
 ## Prerequisites
 - Ubuntu 20.04
@@ -24,6 +24,8 @@ You can download them here:
   docker pull foode258/yolo_ros:fptest1
 ```
 
+## Ultralytics
+**Ultralytics needs to be installed locally, this part is to be added**
 
 
 
@@ -33,7 +35,10 @@ The navigation points within the program are based on the map in the lab, please
 Please make sure that dockers can communicate with each other properly.
 
 
-
+In the local Terminal:
+```bash
+rosrun yolov8_pose_gazebo yolov8_pose_gazebo.py
+```
 
 In the **yolo_ros** image:
 ```bash
@@ -41,24 +46,15 @@ roslaunch object_detection object_detection.launch
 ```
 In the **tiago_yolo** image：
 ```bash
+roslaunch carry_navi localization.launch
 rosrun carry_task_manager task_manager.py
 ```
+Then the Tiago robot will perform the Carry My Luggage task. 
+
+Please refer to the instructions within the task manager if you need detailed steps.
 
 
 
 
-
-## Features
-- Person Detection and Tracking
-  - Real-time detection of people using YOLO V3
-  - Continuous tracking through the /text_markers topic
-  - Head movement control to track detected persons
-
-
-- ROS Integration
-  - Compatible with ROS Navigation Stack
-  - Uses move_base for path planning and execution 
-  - TF2 integration for coordinate transformations
-  - Real-time visualization of navigation goals and person poses
 
 
