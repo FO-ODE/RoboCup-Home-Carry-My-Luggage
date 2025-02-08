@@ -4,7 +4,7 @@
 This project is modified from Carry My Luggage, which is a standard RoboCup task. The goal of the task is for the robot to carry an item specified by the operator, follow the operator around, and return the item to the operator in the end. 
 ## Table of Contents
 - [Prerequisites](#prerequisites)
-- [Installation](#installation)
+- [Docker](#Docker)
 - [Usage](#usage)
 - [Features](#features)
 - [License](#license)
@@ -15,40 +15,13 @@ This project is modified from Carry My Luggage, which is a standard RoboCup task
 - TIAGo Robot / Simulator
 - CUDA-compatible GPU (for YOLO)
 
-## Installation
+## Docker
+All required packages for this task have been encapsulated in **two Docker images**, which include a fully configured runtime environment. Once downloaded, they can be directly used on the **Tiago robot**.  
 
-1. Create a catkin workspace (skip if you already have one):
-    ```bash
-    mkdir -p ~/tiago_ws/src
-    cd ~/tiago_ws
-    catkin init
-    ```
+**Note:** Due to **differences in MoveIt versions** and **incompatibility of certain message types**, some features may not function correctly in the **Gazebo simulation environment**.  
 
-2. Clone the repository:
-    ```bash
-    cd ~/tiago_ws/src
-    git clone https://github.com/shilinzhang42/RoboCup-Home.git
-    ```
+You can download them here:  
 
-3. Install dependencies:
-    ```bash
-    sudo apt-get update
-    sudo apt install ros-noetic-desktop-full
-    ```
-
-4. Install darknet_ros:
-    ```bash
-    cd ~/tiago_ws/src/final_project
-    sudo apt-get update
-    git clone --recursive git@github.com:leggedrobotics/darknet_ros.git
-    ```
-
-5. Build the workspace:
-    ```bash
-    cd ~/tiago_ws
-    catkin build
-    source devel/setup.bash
-    ```
 
 ## Features
 - Person Detection and Tracking
