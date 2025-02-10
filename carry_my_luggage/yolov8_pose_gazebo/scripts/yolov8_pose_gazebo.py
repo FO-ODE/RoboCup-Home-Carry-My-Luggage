@@ -1,81 +1,112 @@
+#!/usr/bin/env python3
 import rospy
+import cv2
+import math
+import numpy as np
 from sensor_msgs.msg import Image
 from std_msgs.msg import String
 from cv_bridge import CvBridge
-import cv2
 from ultralytics import YOLO
 
-# Initialize the YOLOv8-Pose model
-pose_model = YOLO("yolov8n-pose.pt")  
+class PoseDetector:
+    def __init__(self):
+        rospy.init_node('yolov8_pose_gazebo')
+        
+        # 初始化模型
+        self.model = YOLO("scripts/models/yolov8n-pose.pt").to("cuda")
+        self.bridge = CvBridge()
+        
+        # 参数配置
+        self.side_angle_thres = 45   # 侧抬手臂判定阈值
+        self.forward_thres = 30      # 前抬手臂垂直偏差阈值
+        
+        # 发布器
+        self.stop_pub = rospy.Publisher("/test_topic", String, queue_size=1)
+        self.grasp_pub = rospy.Publisher("/start_grasp", String, queue_size=1)
+        
+        # 订阅摄像头
+        self.image_sub = rospy.Subscriber("/xtion/rgb/image_raw", Image, self.image_callback)
+        
+        # 初始化OpenCV窗口
+        cv2.namedWindow("YOLOv8 Pose Detection", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("YOLOv8 Pose Detection", 1280, 720)
 
-# Initialize ROS
-rospy.init_node("yolov8_pose_gazebo")
-bridge = CvBridge()
+    def calculate_angle(self, a, b, c):
+        """计算三个关键点之间的角度(以b为顶点)"""
+        ba = a - b
+        bc = c - b
+        cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
+        return math.degrees(np.arccos(cosine_angle))
 
-# Create ROS topic publishers
-pose_pub = rospy.Publisher("/test_topic", String, queue_size=10)
+    def image_callback(self, msg):
+        try:
+            # 图像转换
+            cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
+            
+            # 推理检测
+            results = self.model(cv_image, verbose=False)
+            
+            # 可视化处理
+            if results[0].boxes is not None:
+                annotated_frame = results[0].plot()  # 自动绘制bbox和关键点
+            else:
+                annotated_frame = cv_image.copy()
+            
+            if results[0].keypoints is not None:
+                # 关键点处理
+                keypoints = results[0].keypoints.xy.cpu().numpy()
+                confidences = results[0].keypoints.conf.cpu().numpy()
+                
+                for person, conf in zip(keypoints, confidences):
+                    # 过滤低置信度关键点
+                    if conf[5] < 0.5 or conf[6] < 0.5:  # 需要可靠的双肩检测
+                        continue
+                    
+                    # 关键点索引
+                    left_shoulder = person[5]
+                    left_elbow = person[7]
+                    left_wrist = person[9]
+                    right_shoulder = person[6]
+                    right_elbow = person[8]
+                    right_wrist = person[10]
 
-def image_callback(msg):
-    try:
-        # Convert ROS image messages to OpenCV images
-        cv_image = bridge.imgmsg_to_cv2(msg, "bgr8")
+                    # ========== 侧抬手检测 ==========
+                    left_arm_angle = self.calculate_angle(left_shoulder, left_elbow, left_wrist)
+                    right_arm_angle = self.calculate_angle(right_shoulder, right_elbow, right_wrist)
+                    
+                    if left_arm_angle < self.side_angle_thres:
+                        self.stop_pub.publish(String(data="stop_follow"))
+                        cv2.putText(annotated_frame, "LEFT ARM RAISED", (50, 50),
+                                   cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                    elif right_arm_angle < self.side_angle_thres:
+                        self.stop_pub.publish(String(data="stop_follow")) 
+                        cv2.putText(annotated_frame, "RIGHT ARM RAISED", (50, 50),
+                                   cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-        # Run YOLOv8-Pose detection
-        pose_results = pose_model.predict(cv_image, stream=False)
+                    # ========== 前抬手检测 ==========
+                    left_vertical_diff = abs(left_wrist[1] - left_shoulder[1])
+                    right_vertical_diff = abs(right_wrist[1] - right_shoulder[1])
+                    
+                    if left_vertical_diff < self.forward_thres:
+                        self.grasp_pub.publish(String(data="start_grasp"))
+                        cv2.putText(annotated_frame, "FORWARD LEFT ARM", (50, 100),
+                                   cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                    elif right_vertical_diff < self.forward_thres:
+                        self.grasp_pub.publish(String(data="start_grasp"))
+                        cv2.putText(annotated_frame, "FORWARD RIGHT ARM", (50, 100),
+                                   cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-        # Make sure pose_results is not empty
-        if not pose_results:
-            rospy.loginfo("No people detected.")
-            return
-
-        # Iterate over everyone detected
-        for pose_result in pose_results:
-            keypoints = pose_result.keypoints  # Access to key points
-
-            if keypoints is None or len(keypoints.xy[0]) < 11:
-                continue  # Ensure that key points are sufficient
-
-            left_hand = keypoints.xy[0][9]  # Left hand
-            right_hand = keypoints.xy[0][10]  ## Right hand
-            left_elbow = keypoints.xy[0][7]  # Left elbow
-            right_elbow = keypoints.xy[0][8]  # Right elbow
-
-            # Detecting hand-raising postures
-            if is_side_raised(left_hand, right_hand, left_elbow, right_elbow):
-                rospy.loginfo("Side hand raised detected! Publishing 'stop_follow'.")
-                pose_pub.publish("stop_follow")
-
-            elif is_front_raised(left_hand, right_hand, left_elbow, right_elbow):
-                rospy.loginfo("Front hand raised detected! Publishing 'start_grasp'.")
-                pose_pub.publish("start_grasp")
-
-            # Display test results
-            annotated_frame = pose_result.plot()
-            cv2.imshow("Pose Detection", annotated_frame)
+            # 显示处理后的图像
+            cv2.imshow("YOLOv8 Pose Detection", annotated_frame)
             cv2.waitKey(1)
 
-    except Exception as e:
-        rospy.logerr(f"Error processing image: {e}")
+        except Exception as e:
+            rospy.logerr(f"Processing error: {str(e)}")
+        finally:
+            # ROS关闭时自动清理窗口
+            if rospy.is_shutdown():
+                cv2.destroyAllWindows()
 
-def is_side_raised(left_hand, right_hand, left_elbow, right_elbow):
-    """ Determine if it is a side lift (left or right hand up over a certain angle) """
-    threshold = 20  # Hands up threshold
-    left_raised = left_hand[1] < left_elbow[1] - threshold
-    right_raised = right_hand[1] < right_elbow[1] - threshold
-    return left_raised or right_raised
-
-def is_front_raised(left_hand, right_hand, left_elbow, right_elbow):
-    """ Determine if it is a forward lift (left or right hand straight forward) """
-    threshold = 20  # Pre-extension threshold
-    left_forward = abs(left_hand[0] - left_elbow[0]) > threshold
-    right_forward = abs(right_hand[0] - right_elbow[0]) > threshold
-    return left_forward or right_forward
-
-if __name__ == "__main__":
-    # Subscribe to camera images
-    rospy.Subscriber("/xtion/rgb/image_raw", Image, image_callback)
-    
-    rospy.loginfo("Pose detection node started!")
+if __name__ == '__main__':
+    detector = PoseDetector()
     rospy.spin()
-
-    cv2.destroyAllWindows()
