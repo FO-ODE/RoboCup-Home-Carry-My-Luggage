@@ -58,7 +58,7 @@ def image_callback(msg):
 
     except Exception as e:
         rospy.logerr(f"Error processing image: {e}")
-
+        
 def is_side_raised(left_hand, right_hand, left_elbow, right_elbow):
     """ Determine whether a side hand raise is detected (left or right hand raised above a certain threshold) """
     threshold = 20  # Hand raise threshold
