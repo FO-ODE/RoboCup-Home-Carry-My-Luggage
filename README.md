@@ -17,6 +17,7 @@ This project is modified from Carry My Luggage, which is a standard RoboCup task
 - ROS Noetic
 - TIAGo Robot / Simulator
 - CUDA-compatible GPU (for YOLO)
+- Ultralytics
 
 ## Docker
 Most required packages for this task have been encapsulated in two Docker images, which include a fully configured runtime environment. Once downloaded, they can be directly used with the TIAGo robot. And it is recommended to boot the image with **rocker** in order to enable Nvidia CUDA support.
