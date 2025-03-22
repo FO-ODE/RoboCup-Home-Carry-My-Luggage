@@ -26,14 +26,14 @@ Most required packages for this task have been encapsulated in two Docker images
 
 You can download them here:  
 ```bash
-  docker pull foode258/TIAGo_yolo:fpmoveit10
+  docker pull foode258/tiago_yolo:fpmoveit10
   docker pull foode258/yolo_ros:fptest1
 ```
 
 ## Ultralytics
 We have not integrated Ultralytics in the docker image, which is used for character pose and gesture recognition. With ROS Noetic and tiago_tutorials installed, follow these steps to install Ultralytics:
 ```bash
-  cd ~/TIAGo_ws
+  cd ~/tiago_ws
 ```
 
 Install the dependencies: 
