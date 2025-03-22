@@ -69,7 +69,7 @@ In the **yolo_ros** image:
 ```bash
 roslaunch object_detection object_detection.launch
 ```
-In the **TIAGo_yolo** image：
+In the **tiago_yolo** image：
 ```bash
 roslaunch carry_navi localization.launch
 rosrun carry_task_manager task_manager.py
