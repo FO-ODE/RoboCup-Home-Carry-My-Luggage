@@ -65,11 +65,11 @@ In the local Terminal:
 rosrun yolov8_pose_gazebo yolov8_pose_gazebo.py
 ```
 
-In the **yolo_ros** image:
+In the Docker container based on the **yolo_ros** image:
 ```bash
 roslaunch object_detection object_detection.launch
 ```
-In the **tiago_yolo** image：
+In the Docker container based on the **tiago_yolo** image：
 ```bash
 roslaunch carry_navi localization.launch
 rosrun carry_task_manager task_manager.py
