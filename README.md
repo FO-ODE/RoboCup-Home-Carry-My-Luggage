@@ -26,7 +26,7 @@ Most required packages for this task have been encapsulated in two Docker images
 
 You can download them here:  
 ```bash
-  docker pull foode258/tiago_yolo:fpmoveit10
+  docker pull foode258/tiago_robot:1.0
   docker pull foode258/yolo_ros:fptest1
 ```
 
